@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import wardaLogo from "./assets/warda-logo.png";
+import wardaLogo from "./assets/warda.png";
 import { search } from "./api";
 import type { SearchResponse } from "./types";
 import { cleanFragmentText } from "./text";

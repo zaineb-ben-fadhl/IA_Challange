@@ -1,23 +1,24 @@
 /* =========================================================
-   ROSE BLANCHE GROUP — CSS COMPLET (Light premium)
-   Palette basée sur le logo (bordeaux + blanc + or/blé)
-   - UI moderne, très propre, “food brand”
-   - Animations discrètes (orbes + shine + apparition cartes)
+   ROSE BLANCHE GROUP — CSS COMPLET (Light premium) + BACKGROUND ANIMATION LÉGÈRE
+   Objectif: garder un fond animé joli MAIS beaucoup plus léger (moins de “vide” / moins agressif / moins GPU)
+   - orbes plus petites + blur réduit
+   - animation plus lente + amplitude faible
+   - sparkle plus simple + twinkle lent
    ========================================================= */
 
 :root{
   /* Brand (logo) */
-  --brand: #B3122D;         /* bordeaux */
-  --brand-800: #7E0D1F;     /* bordeaux foncé */
-  --brand-600: #C21836;     /* bordeaux plus vif */
-  --brand-100: #F7D7DE;     /* rose pâle */
+  --brand: #B3122D;
+  --brand-800: #7E0D1F;
+  --brand-600: #C21836;
+  --brand-100: #F7D7DE;
 
-  --accent: #E2B24A;        /* or / blé */
+  --accent: #E2B24A;
   --accent-800: #B8871B;
   --accent-100: #FFF2D1;
 
   /* Base */
-  --bg: #FFF7F8;            /* ivoire */
+  --bg: #FFF7F8;
   --bg2: #FFFFFF;
   --surface: #FFFFFF;
   --surface-2: #FFFCFD;
@@ -69,7 +70,7 @@ body{
 }
 
 /* =========================================================
-   Animated background layer (soft, premium)
+   Animated background layer (LIGHTWEIGHT)
    ========================================================= */
 .bg{
   position:fixed;
@@ -78,44 +79,54 @@ body{
   z-index:0;
 }
 
+/* Orbes: plus petites + blur réduit + animation lente + petite amplitude */
 .orb{
   position:absolute;
-  width:560px; height:560px;
-  border-radius:999px;
-  filter: blur(50px);
-  opacity:0.55;
-  animation: drift 12s ease-in-out infinite;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  filter: blur(28px);
+  opacity: 0.42;
   transform: translateZ(0);
+  will-change: transform;
 }
+
 .orb--gold{
-  left:-220px; top:-240px;
-  background: radial-gradient(circle at 35% 35%, rgba(226,178,74,0.32), transparent 62%);
+  left:-170px; top:-190px;
+  background: radial-gradient(circle at 35% 35%, rgba(226,178,74,0.30), transparent 64%);
+  animation: driftA 26s ease-in-out infinite;
 }
+
 .orb--pink{
-  right:-280px; top:0px;
-  background: radial-gradient(circle at 35% 35%, rgba(179,18,45,0.22), transparent 64%);
-  animation-duration: 14s;
+  right:-210px; top:10px;
+  background: radial-gradient(circle at 35% 35%, rgba(179,18,45,0.22), transparent 66%);
+  animation: driftB 32s ease-in-out infinite;
 }
 
-@keyframes drift{
+/* Mouvement très léger => moins de “vide”, moins de fatigue visuelle */
+@keyframes driftA{
   0%,100%{ transform: translate(0,0) scale(1); }
-  50%{ transform: translate(22px, 18px) scale(1.05); }
+  50%{ transform: translate(14px, 10px) scale(1.03); }
+}
+@keyframes driftB{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(-12px, 12px) scale(1.04); }
 }
 
-/* Very subtle sparkles */
+/* Sparkles: beaucoup plus simple + twinkle lent */
 .sparkles{
   position:absolute; inset:0;
   background:
-    radial-gradient(2px 2px at 20% 30%, rgba(179,18,45,0.10), transparent 60%),
-    radial-gradient(2px 2px at 60% 20%, rgba(226,178,74,0.10), transparent 60%),
-    radial-gradient(2px 2px at 75% 55%, rgba(179,18,45,0.08), transparent 60%),
-    radial-gradient(1.5px 1.5px at 35% 70%, rgba(226,178,74,0.08), transparent 60%);
-  opacity:0.85;
-  animation: twinkle 6s ease-in-out infinite;
+    radial-gradient(2px 2px at 18% 28%, rgba(179,18,45,0.08), transparent 65%),
+    radial-gradient(2px 2px at 62% 20%, rgba(226,178,74,0.09), transparent 65%),
+    radial-gradient(2px 2px at 78% 56%, rgba(179,18,45,0.06), transparent 65%);
+  opacity: 0.70;
+  animation: twinkle 10s ease-in-out infinite;
+  will-change: opacity;
 }
 @keyframes twinkle{
-  0%,100%{ opacity:0.7; }
-  50%{ opacity:1; }
+  0%,100%{ opacity:0.62; }
+  50%{ opacity:0.82; }
 }
 
 /* =========================================================
@@ -130,43 +141,59 @@ body{
   gap:16px;
   padding: 26px var(--container-pad);
 }
-/* Agrandir le “bloc” logo */
-.brand__logo{
-  width: 100px;   /* avant: 62px */
-  height: 100px;  /* avant: 62px */
-  border-radius: 22px; /* un peu plus grand pour rester joli */
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
+/* Agrandir logo */
+.brand__logo{
+  width: 100px;
+  height: 100px;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  /* pas de background derrière le logo */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
 
 /* Logo image */
 .brand__logo img{
-  width: 86%;
+  width: 94%;
   height:auto;
   transform-origin:center;
-  animation: pulseLogo 3.0s ease-in-out infinite;
+  animation: pulseLogo 5.5s ease-in-out infinite; /* plus lent */
   filter: drop-shadow(0 10px 18px rgba(27,11,16,0.12));
 }
 
-/* Shine ring around logo */
+/* Shine ring (très discret) */
 .brand__logo::after{
   content:"";
-  position:absolute; inset:-80%;
+  position:absolute; inset:-90%;
   background: conic-gradient(
     from 180deg,
     transparent,
-    rgba(226,178,74,0.22),
+    rgba(226,178,74,0.14),
     transparent,
-    rgba(179,18,45,0.18),
+    rgba(179,18,45,0.12),
     transparent
   );
-  animation: shine 3.8s linear infinite;
-  mix-blend-mode: multiply;
-  opacity: 0.85;
+  animation: shine 9s linear infinite; /* plus lent */
+  opacity: 0.55;
+  pointer-events:none;
 }
+
 @keyframes shine{ to{ transform: rotate(360deg); } }
 @keyframes pulseLogo{
   0%,100%{ transform: scale(1); }
-  50%{ transform: scale(1.03); }
+  50%{ transform: scale(1.02); }
 }
 
 .brand__txt{ display:flex; flex-direction:column; }
@@ -414,7 +441,6 @@ body{
   overflow:hidden;
 }
 
-/* subtle top highlight line */
 .card::before{
   content:"";
   position:absolute;
@@ -449,7 +475,7 @@ body{
 .card__label{ margin-top: 12px; font-size: 12px; color: var(--muted); }
 .card__text{
   margin-top: 8px;
-  line-height:1.6;
+  line-height: 1.65;
   font-size: 13.5px;
   color: rgba(27,11,16,0.90);
   white-space: pre-wrap;
@@ -503,39 +529,32 @@ body{
 .footer__muted{ color: rgba(27,11,16,0.45); }
 
 /* =========================================================
-   Optional: reduce motion for accessibility
+   LLM buttons
    ========================================================= */
-@media (prefers-reduced-motion: reduce){
-  .orb, .sparkles, .brand__logo img, .brand__logo::after, .card{
-    animation: none !important;
-  }
-}
-/* --- LLM buttons layout --- */
 .llmBtns{
   margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
-
-/* Secondary button (light) */
 .btn--secondary{
   background: linear-gradient(135deg, #ffffff, rgba(226,178,74,0.22));
   color: var(--text);
   border: 1px solid rgba(226,178,74,0.40);
   box-shadow: var(--shadow2);
 }
+.btn--secondary:hover{ filter: brightness(1.02); }
 
-.btn--secondary:hover{
-  filter: brightness(1.02);
-}
-
-/* Dark spinner on light button */
 .spinner--dark{
   border: 2px solid rgba(27,11,16,0.18);
   border-top-color: rgba(27,11,16,0.60);
 }
-.card__text{
-  white-space: pre-wrap; /* IMPORTANT */
-  line-height: 1.65;
+
+/* =========================================================
+   Optional: reduce motion
+   ========================================================= */
+@media (prefers-reduced-motion: reduce){
+  .orb, .sparkles, .brand__logo img, .brand__logo::after, .card{
+    animation: none !important;
+  }
 }
