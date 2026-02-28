@@ -5,7 +5,7 @@
 
 [Voir la vidéo](https://drive.google.com/file/d/1fi5-Qb_iu9Z19ZndmqJonro9G4b9gaPj/view?usp=sharing)
 
-> Remarque : sur GitHub, le lien ouvre la vidéo dans un nouvel onglet (selon le navigateur). GitHub ne permet pas de forcer `target="_blank"` dans un README.
+
 
 
 Ce projet implémente un **module de recherche sémantique** sur une base vectorielle PostgreSQL/**pgvector** et une interface **Streamlit**.
