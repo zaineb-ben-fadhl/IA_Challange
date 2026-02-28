@@ -7,7 +7,7 @@ Le système :
 - calcule la similarité cosinus avec les embeddings stockés en base,
 - retourne les **Top K** fragments (par défaut **3**) avec leur **score**.
 
-En bonus (optionnel), un **LLM local (Ollama)** peut :
+un **LLM local (Ollama)** peut :
 - générer **une phrase** qui répond à la question pour **chaque fragment**, ou
 - générer une **réponse finale** synthétique à partir des Top‑K fragments.
 
@@ -18,7 +18,7 @@ En bonus (optionnel), un **LLM local (Ollama)** peut :
 - **Python 3.10+**
 - **PostgreSQL** + extension **pgvector**
 - Windows / Linux / macOS
-- (Optionnel) **Ollama** pour le résumé LLM : https://ollama.com
+- **Ollama** pour le résumé LLM : https://ollama.com
 
 ---
 
