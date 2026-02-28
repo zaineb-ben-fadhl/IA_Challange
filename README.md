@@ -7,9 +7,18 @@ Le système :
 - calcule la similarité cosinus avec les embeddings stockés en base,
 - retourne les **Top K** fragments (par défaut **3**) avec leur **score**.
 
-un **LLM local (Ollama)** peut :
+Un **LLM local (Ollama)** peut :
 - générer **une phrase** qui répond à la question pour **chaque fragment**, ou
 - générer une **réponse finale** synthétique à partir des Top‑K fragments.
+
+---
+
+## Démo vidéo
+
+- **Video Demo (Google Drive)** : https://drive.google.com/file/d/15AhBHO6ST0r1cYKf0zv2JZYru2flfaNT/view?usp=sharing
+
+> Remarque: GitHub ne peut pas “embed” directement une vidéo Google Drive en lecture intégrée.
+> Le lien ci-dessus ouvre la vidéo dans Google Drive.
 
 ---
 
@@ -26,10 +35,10 @@ un **LLM local (Ollama)** peut :
 
 - `app.py` : application Streamlit (frontend)
 - `rag_search.py` : module de recherche sémantique (embedding + requêtes pgvector)
-- `ollama_client.py` : client Ollama (optionnel, résumé/answer)
+- `ollama_client.py` : client Ollama (résumé/answer)
 - `search.py` : (optionnel) version CLI de la recherche
 - `.env` : variables d’environnement (non commité)
-- `requirements.txt` : dépendances Python (si vous en avez)
+- `requirements.txt` : dépendances Python
 
 ---
 
@@ -101,7 +110,6 @@ CREATE TABLE IF NOT EXISTS embeddings (
 );
 ```
 
-
 ---
 
 ## Lancer l’application Streamlit
@@ -116,8 +124,7 @@ Puis ouvrir l’URL affichée (souvent : http://localhost:8501).
 
 ## Utilisation (consigne)
 
-1. Saisir une question (ex :  
-   **"Quel dosage est conseillé pour un blocage froid positif (2°C) ?"**)
+1. Saisir une question (ex : **"Quel dosage est conseillé pour un blocage froid positif (2°C) ?"**)
 2. Cliquer sur **Rechercher**
 3. L’application affiche :
    - les **3 fragments** les plus pertinents (Top‑K),
@@ -126,7 +133,7 @@ Puis ouvrir l’URL affichée (souvent : http://localhost:8501).
 
 ---
 
-## Bonus (optionnel) : Résumé / réponse avec Ollama (LLM local)
+## Bonus : Résumé / réponse avec Ollama (LLM local)
 
 ### 1) Installer Ollama
 Téléchargement : https://ollama.com
@@ -136,7 +143,7 @@ Téléchargement : https://ollama.com
 ollama pull phi3:mini
 ```
 
-### 3) Vérifier que l’API tourne
+### 3) Vérifier que l’API Ollama tourne
 ```powershell
 curl http://localhost:11434/api/tags
 ```
@@ -152,6 +159,7 @@ curl http://localhost:11434/api/tags
 ---
 
 ## Validation rapide (vérifier que E300/ascorbique est bien ingéré)
+
 Dans PowerShell, vous pouvez tester si des fragments contiennent "ascorb" :
 
 ```powershell
@@ -162,8 +170,8 @@ python -c "import os; from dotenv import load_dotenv; load_dotenv(); import psyc
 
 ## Notes / limitations
 
-- La recherche vectorielle retourne les fragments les plus proches sémantiquement.  
-  Si une question demande **plusieurs ingrédients** (ex : amylase + xylanase + E300), il est possible que la base ne contienne pas un fragment unique avec les 3 informations. Dans ce cas :
+- La recherche vectorielle retourne les fragments les plus proches sémantiquement.
+- Si une question demande **plusieurs ingrédients** (ex : amylase + xylanase + E300), il est possible que la base ne contienne pas un fragment unique avec les 3 informations. Dans ce cas :
   - le Top‑K peut contenir des fragments “séparés”,
   - la réponse doit être synthétisée à partir de plusieurs sources (le mode “réponse finale LLM” aide).
 
